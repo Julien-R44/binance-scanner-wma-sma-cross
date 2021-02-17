@@ -61,6 +61,7 @@ function computeSmma2(candles, length) {
 
 async function main() {
   const exchangeInfo = await binance.futuresExchangeInfo()
+
   const symbols: Array<BinanceSymbol> = exchangeInfo.symbols.map(
     (symbol) => new BinanceSymbol(symbol)
   )
@@ -103,4 +104,6 @@ async function main() {
   discordHook.destroy()
 }
 
-main()
+setInterval(() => {
+  main()
+}, 10000)
