@@ -34,6 +34,26 @@ export class DiscordHook {
             name: 'Prix Actuel',
             value: alert.lastCandleClose,
             inline: true
+          },
+          {
+            name: 'WMA',
+            value: alert.wma,
+            inline: true
+          },
+          {
+            name: 'Prev. WMA',
+            value: alert.prevWma,
+            inline: true
+          },
+          {
+            name: 'SMMA',
+            value: alert.smma,
+            inline: true
+          },
+          {
+            name: 'Prev. SMMA',
+            value: alert.prevSmma,
+            inline: true
           }
         )
     )

@@ -23,13 +23,19 @@ export class AssetScanner {
 
     const reversedCandle = candles
     const reversedCandleMinusLast = [...candles]
+    const reversedCandleMinusLastLast = [...candles]
     reversedCandleMinusLast.shift()
 
+    reversedCandleMinusLastLast.shift()
+    reversedCandleMinusLastLast.shift()
+
     const lastWma = [
+      AT.computeWma(reversedCandleMinusLastLast, 144),
       AT.computeWma(reversedCandleMinusLast, 144),
       AT.computeWma(reversedCandle, 144)
     ]
     const lastSmma = [
+      AT.computeSmma2(reversedCandleMinusLastLast, 5),
       AT.computeSmma2(reversedCandleMinusLast, 5),
       AT.computeSmma2(candles, 5)
     ]
@@ -42,12 +48,18 @@ export class AssetScanner {
         symbol,
         ut,
         lastCandleTime: reversedCandle[0].time,
-        lastCandleClose: reversedCandle[0].close
+        lastCandleClose: reversedCandle[0].close,
+
+        prevWma: lastWma[0],
+        wma: lastWma[1],
+        prevSmma: lastSmma[0],
+        smma: lastSmma[1]
       })
 
       if (!AlertHistory.alertWasAlreadySent(alert)) {
+        console.log(alert)
         alert.addToHistory()
-        hook.sendAlert(alert)
+        // hook.sendAlert(alert)
       } else {
         console.log('already sent long')
       }
@@ -61,15 +73,21 @@ export class AssetScanner {
         symbol,
         ut,
         lastCandleTime: reversedCandle[0].time,
-        lastCandleClose: reversedCandle[0].close
+        lastCandleClose: reversedCandle[0].close,
+
+        prevWma: lastWma[0],
+        wma: lastWma[1],
+        prevSmma: lastSmma[0],
+        smma: lastSmma[1]
       })
 
       if (!AlertHistory.alertWasAlreadySent(alert)) {
+        console.log(alert)
         if (ut === '5m') {
-          console.log(alert, AlertHistory.sentAlerts)
+          // console.log(alert, AlertHistory.sentAlerts)
         }
         alert.addToHistory()
-        hook.sendAlert(alert)
+        // hook.sendAlert(alert)
       } else {
         console.log('already sent short')
       }

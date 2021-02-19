@@ -35,5 +35,5 @@ async function main() {
 setInterval(() => {
   console.log('new scan')
   main()
-}, 40000)
+}, 50000)
 main()
